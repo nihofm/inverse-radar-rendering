@@ -1,10 +1,6 @@
 # Inverse Rendering of Near-Field mmWave MIMO Radar for Material Reconstruction
 
-<p align="center">
-    <video width="1024" controls autoplay>
-        <source src="data/optim_reco_33_s2_hand_open.mp4" type="video/mp4">
-    </video>
-</p>
+https://github.com/user-attachments/assets/3ae958b9-8b7e-4e31-bc6a-e8463d6170eb
 
 ![language](https://img.shields.io/badge/language-Python-brown)
 [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
@@ -54,11 +50,8 @@ To execute differentiable radar rendering while using defaults on any dataset in
 Each optimization run can be examined via [Tensorboard](https://www.tensorflow.org/tensorboard), or by looking at the respective output in `runs/`, where a folder is created for each run using the following scheme: `runs/<datetime>_<hostname>-<dataset>-<hash>`.
 
 Exemplary results for `02_cardboard/30` in layout (depth, normals, prediction, target, error map) using default parameters:
-<p align="center">
-    <video width="1024" controls autoplay>
-        <source src="data/optim_reco_02_cardboard.mp4" type="video/mp4">
-    </video>
-</p>
+
+https://github.com/user-attachments/assets/69281d20-77d9-4072-9a68-a53cc0be7970
 
 Run using defaults, but with different loss functions, as in Figure 9:
 
