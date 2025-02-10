@@ -1,0 +1,3 @@
+[submodule "submodules/maroon"]
+	path = submodules/maroon
+	url = https://github.com/vwirth/maroon
