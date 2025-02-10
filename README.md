@@ -19,7 +19,9 @@ Source code for our paper "Inverse Rendering of Near-Field mmWave MIMO Radar for
 
 # Install
 
-Please note that an [NVIDIA OptiX](https://developer.nvidia.com/rtx/ray-tracing/optix) capable GPU is required. Example commands for Ubuntu:
+Clone repository with submodules (`git clone --recursive`), or initialize submodules afterwards (`git submodule update --init --recursive`). Note that there must be a [NVIDIA OptiX](https://developer.nvidia.com/rtx/ray-tracing/optix) capable GPU available on the target system.
+
+Basically, we require a Python3 environment where all packages from `requirements.txt` are installed. Example installation commands on an Ubuntu-based system:
 
 ### Install dependencies
 
@@ -37,7 +39,7 @@ Optionally patch `slangtorch` to emit the `--use_fast_math` nvcc option, which y
 
 # Download MAROON dataset
 
-See [MAROON](https://github.com/vwirth/maroon) (also included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip) and extract into a folder of choice.
+See [MAROON](https://github.com/vwirth/maroon) (included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip) and extract to a folder of choice.
 
 # Run code
 
