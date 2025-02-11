@@ -72,6 +72,12 @@ Run using defaults, but with different features turned on or off, as in Figure 1
 See `main.py` for a list of all possible command line arguments.
 Note that the `--use_apc` option will raise an exception per default, since this requires additional information regarding the antenna radiation pattern, which is not publicly available.
 
+# Acknowledgments
+
+We would like to thank the Rohde & Schwarz GmbH & Co. KG (Munich, Germany) for providing the radar imaging device and technical support which made this work possible.
+This work was (partly) funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) – SFB 1483 – Project-ID 442419336, EmpkinS.
+The authors gratefully acknowledge the scientific support and HPC resources provided by the Erlangen National High Performance Computing Center (NHR@FAU) of the Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU) under the NHR project b201dc. NHR funding is provided by federal and Bavarian state authorities. NHR@FAU hardware is partially funded by the DFG – Project-ID 440719683.
+
 # Citation
 
     TBD, will be updated after publication
