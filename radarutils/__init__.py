@@ -5,7 +5,7 @@ import slangtorch
 # set device capability
 device_capability = torch.cuda.get_device_capability()
 os.environ['TORCH_CUDA_ARCH_LIST'] = f'{device_capability[0]}.{device_capability[1]}'
-print(f'{os.path.basename(os.path.dirname(__file__))}: compiling with TORCH_CUDA_ARCH_LIST: {os.environ['TORCH_CUDA_ARCH_LIST']}...')
+print(f'{os.path.basename(os.path.dirname(__file__))}: compiling with TORCH_CUDA_ARCH_LIST: {os.environ["TORCH_CUDA_ARCH_LIST"]}...')
 
 # --------------------------------------------------------------
 # Torch autograd function for differentiable signal generation w/ differentiable material
