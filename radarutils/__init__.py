@@ -81,23 +81,6 @@ class MeshLookupFunc(torch.autograd.Function):
         features_grad = MeshLookupFunc.module.mesh_lookup_bwd(hit_positions, hit_primIDs, vbo, ibo, features, output_grad)
         return None, None, None, None, features_grad
 
-# --------------------------------------------------------------
-# Torch autograd function for regularization after mesh sampling
-
-class MeshRegularizeFunc(torch.autograd.Function):
-    module = slangtorch.loadModule(os.path.join(os.path.dirname(__file__), "slang", "mesh_regularize.slang"))
-
-    @staticmethod
-    def forward(ctx, vbo, start_end, neighbors, features):
-        ctx.save_for_backward(vbo, start_end, neighbors, features)
-        return MeshRegularizeFunc.module.mesh_regularize_fwd(vbo, start_end, neighbors, features)
-
-    @staticmethod
-    def backward(ctx, output_grad):
-        [vbo, start_end, neighbors, features] = ctx.saved_tensors
-        features_grad = MeshRegularizeFunc.module.mesh_regularize_bwd(vbo, start_end, neighbors, features, output_grad)
-        return None, None, None, features_grad
-
 # ---------------------------------------------------
 # Torch autograd function for normalmapping
 

@@ -56,7 +56,6 @@ if __name__ == "__main__":
     parser.add_argument('--device', default='cuda:0', type=str, help="CUDA device to compute stuff on")
     parser.add_argument('--material', default=4, type=int, help="Which material model to use (0: baseline, 1: mixed phong, 2: layered BRDF, 3: fresnel smooth, 4: fresnel rough)")
     parser.add_argument('--material_storage', default='voxelgrid', type=str, choices=['global', 'voxelgrid', 'hashgrid', 'vertex'], help="Which material datastructure to use")
-    parser.add_argument('--reg_weight', default=0.0, type=float, help="Regularization weight for VertexMaterial")
     parser.add_argument('--no_emptyfiltered', dest='use_emptyfiltered', default=True, action='store_false', help="Avoid emptyfiltered signal and use calibrated raw data")
     parser.add_argument('--no_reg_offset', dest='use_reg_offset', default=True, action='store_false', help="Do not optimize fine registration alongside material params")
     parser.add_argument('--use_normalmap', default=False, action='store_true', help="Optimize normalmap alongside material params")
@@ -242,10 +241,9 @@ if __name__ == "__main__":
             loss = torch.nn.functional.mse_loss(signal, signal_real_mean)
         elif args['loss'] == 'l2_reco':
             loss = 1000 * torch.nn.functional.mse_loss(radar.reco_from_signal(signal, args['n_voxels']) / torch.max(reco_target), reco_target / torch.max(reco_target))
-        reg_loss = args['reg_weight'] * radar.regularization_loss()
         torch.cuda.synchronize()
         mid = time.perf_counter()
-        (loss + reg_loss).backward()
+        loss.backward()
         optimizer.step()
         scheduler.step()
         for p in radar.parameters():
@@ -258,7 +256,6 @@ if __name__ == "__main__":
             print(
                 f'epoch {epoch+1:03}/{args["n_epochs"]:03}: '
                 f'loss: {loss.item():0.3f}, '
-                f'reg_loss: {reg_loss.item():0.2f}, '
                 f'lr: {optimizer.param_groups[0]["lr"]:0.1e}, '
                 f'max_grad: {max(torch.max(torch.abs(param.grad)).item() for param in radar.parameters() if param.grad is not None):0.1e}, '
                 f'gain: {radar.gain_dB.item():0.2f}dB, '
@@ -275,7 +272,6 @@ if __name__ == "__main__":
             l2_reco = 1000 * torch.nn.functional.mse_loss(reco / torch.max(reco_target), reco_target / torch.max(reco_target)).item()
             # log to tensorboard
             tb_writer.add_scalar('Optim/loss', loss.item(), epoch)
-            tb_writer.add_scalar('Optim/reg_loss', reg_loss.item(), epoch)
             tb_writer.add_scalar('Optim/loss_L1', l1, epoch)
             tb_writer.add_scalar('Optim/loss_L1_complex', l1_complex, epoch)
             tb_writer.add_scalar('Optim/loss_L2', l2, epoch)

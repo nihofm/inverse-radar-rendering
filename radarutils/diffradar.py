@@ -1,5 +1,4 @@
 import torch
-import trimesh
 import optixutils
 import radarutils
 import numpy as np
@@ -100,14 +99,6 @@ class DiffRadarMaterial(torch.nn.Module):
         # setup mesh data
         self.vbo = mesh_vertices.to(torch.float32).to(device)
         self.ibo = mesh_indices.to(torch.int32).to(device)
-        if material_storage == 'vertex':
-            # compute flattened list of vertex neighbors and their start/end indices for regularization
-            mesh = trimesh.Trimesh(vertices=mesh_vertices, faces=mesh_indices)
-            n_neighbors = np.array([len(vn) for vn in mesh.vertex_neighbors])
-            if max(n_neighbors) > 32:
-                raise RuntimeError(f"Exceeding supported max mesh neighbors of 32 ({max(n_neighbors)}), hardcoded as Slang [MaxIters()]!")
-            self.start_end = torch.from_numpy(np.stack((np.cumsum(np.pad(n_neighbors[:-1], (1, 0))), np.cumsum(n_neighbors)), axis=-1)).to(dtype=torch.int32, device=device)
-            self.neighbors = torch.from_numpy(np.array([n for vn in mesh.vertex_neighbors for n in vn])).to(dtype=torch.int32, device=device)
         # setup OptiX
         self.optix_ctx = optixutils.OptixContext()
         self.optix_ctx.build_bvh(self.vbo, self.ibo)
@@ -164,13 +155,6 @@ class DiffRadarMaterial(torch.nn.Module):
         if self.reg_offset is None: return hit_positions
         wavelength = 299792458 / self.frequencies[0] # use lowest frequency -> longest wavelength
         return hit_positions + (torch.sigmoid(self.reg_offset) - 0.5) * wavelength
-
-    # apply regularization based on material type
-    def regularization_loss(self):
-        if isinstance(self.material, VertexMaterial):
-            return torch.mean(radarutils.MeshRegularizeFunc.apply(self.vbo, self.start_end, self.neighbors, self.material.features))
-        else:
-            return torch.tensor([0.0], device=self.vbo.device)
 
     # helper to compute depth resolution of radar image in meters (~1.4cm)
     def depth_resolution(self):
