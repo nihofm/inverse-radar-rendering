@@ -22,13 +22,13 @@ We use [Miniconda](https://docs.anaconda.com/miniconda/) to install dependencies
     conda env create --file environment.yml
     conda activate inv-radar
 
-# Download dataset (MAROON)
+# Download Dataset (MAROON)
 
-See [MAROON](https://github.com/vwirth/maroon) (included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip), and extract to a folder of choice.
+See [MAROON](https://github.com/vwirth/maroon) (also included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip), and extract to a folder of choice.
 
-# Run
+# Run Optimization
 
-To execute differentiable radar rendering with defaults parameters on any dataset in MAROON, use:
+To execute differentiable radar rendering with default parameters on any dataset in MAROON, use:
 
     python main.py /path/to/maroon/33_s2_hand_open/30
 
@@ -45,6 +45,8 @@ https://github.com/user-attachments/assets/69281d20-77d9-4072-9a68-a53cc0be7970
 Exemplary results for `33_s2_hand_open/30` in layout (depth, normals, prediction, target, error map) using default parameters:
 
 https://github.com/user-attachments/assets/3ae958b9-8b7e-4e31-bc6a-e8463d6170eb
+
+# Ablation Studies
 
 Run with different loss functions, as in Figure 9:
 
