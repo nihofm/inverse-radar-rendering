@@ -10,11 +10,11 @@ dependencies:
   - cuda-cudart
   - pip:
     - numpy==1.26.2
-    - matplotlib==3.5.1
+    - matplotlib==3.6.3
     - torch==2.3.1
     - torchvision==0.18.1
     - tensorboard==2.17.0
-    - slangtorch==1.3.2
+    - slangtorch==1.3.4
     - imageio==2.33.1
     - imageio-ffmpeg==0.4.9
     - trimesh==4.0.5
