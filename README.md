@@ -1,6 +1,6 @@
 # Inverse Rendering of Near-Field mmWave MIMO Radar for Material Reconstruction
 
-https://github.com/user-attachments/assets/3ae958b9-8b7e-4e31-bc6a-e8463d6170eb
+![pipeline](data/pipeline.png)
 
 ![language](https://img.shields.io/badge/language-Python-brown)
 [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/3ae958b9-8b7e-4e31-bc6a-e8463d6170eb
 [cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
 [cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
 
-Source code for our paper "Inverse Rendering of Near-Field mmWave MIMO Radar for Material Reconstruction". DOI `10.1109/JMW.2025.3535077`, links to the paper will be included after publication.
+Source code for our paper "Inverse Rendering of Near-Field mmWave MIMO Radar for Material Reconstruction". DOI `10.1109/JMW.2025.3535077`, links to the PDF will be added after publication.
 
 # Install
 
@@ -41,6 +41,10 @@ Each optimization run can be examined via [Tensorboard](https://www.tensorflow.o
 Exemplary results for `02_cardboard/30` in layout (depth, normals, prediction, target, error map) using default parameters:
 
 https://github.com/user-attachments/assets/69281d20-77d9-4072-9a68-a53cc0be7970
+
+Exemplary results for `33_s2_hand_open/30` in layout (depth, normals, prediction, target, error map) using default parameters:
+
+https://github.com/user-attachments/assets/3ae958b9-8b7e-4e31-bc6a-e8463d6170eb
 
 Run with different loss functions, as in Figure 9:
 
