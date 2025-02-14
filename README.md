@@ -15,31 +15,20 @@ Source code for our paper "Inverse Rendering of Near-Field mmWave MIMO Radar for
 
 # Install
 
-Clone repository with submodules (`git clone --recursive`), or initialize submodules afterwards (`git submodule update --init --recursive`). Note that there must be a [NVIDIA OptiX](https://developer.nvidia.com/rtx/ray-tracing/optix) capable GPU available on the target system.
+Clone repository with submodules using `git clone --recursive`, or initialize after cloning using `git submodule update --init --recursive`.
 
-Basically, we require a Python3 environment where all packages from `requirements.txt` are installed. Example installation commands on an Ubuntu-based system:
+We use [Miniconda](https://docs.anaconda.com/miniconda/) to install dependencies and require a [NVIDIA OptiX](https://developer.nvidia.com/rtx/ray-tracing/optix) >= v8.0 capable GPU and driver.
 
-### Install dependencies
+    conda env create --file environment.yml
+    conda activate inv-radar
 
-    sudo apt install python3 python3-venv
+# Download dataset (MAROON)
 
-### Setup virtual environment and install required packages
+See [MAROON](https://github.com/vwirth/maroon) (included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip), and extract to a folder of choice.
 
-    python3 -m venv env
-    source env/bin/activate
-    pip3 install -r requirements.txt
+# Run
 
-Optionally patch `slangtorch` to emit the `--use_fast_math` nvcc option, which yields up to 2-3x increased runtime performance during backpropagation.
-
-    find -O3 -L env -name "slangtorch.py" -exec sed -i 's/extra_cuda_cflags = \[\"-std=c++17\"\]/extra_cuda_cflags = \[\"-std=c++17\", \"--use_fast_math\"\]/g' {} +
-
-# Download MAROON dataset
-
-See [MAROON](https://github.com/vwirth/maroon) (included as a [submodule](submodules/maroon/README.md)), or download the example [MAROON Mini Dataset](https://faubox.rrze.uni-erlangen.de/getlink/fi43P9pBvMVCGz5xJSfRRM/maroon_mini.zip) and extract to a folder of choice.
-
-# Run code
-
-To execute differentiable radar rendering while using defaults on any dataset in MAROON, use:
+To execute differentiable radar rendering with defaults parameters on any dataset in MAROON, use:
 
     python main.py /path/to/maroon/33_s2_hand_open/30
 
@@ -47,25 +36,25 @@ To execute differentiable radar rendering while using defaults on any dataset in
 
     python main.py data/maroon_mini/02_cardboard/30
 
-Each optimization run can be examined via [Tensorboard](https://www.tensorflow.org/tensorboard), or by looking at the respective output in `runs/`, where a folder is created for each run using the following scheme: `runs/<datetime>_<hostname>-<dataset>-<hash>`.
+Each optimization run can be examined via [Tensorboard](https://www.tensorflow.org/tensorboard), or by looking at the respective output in `runs/`, where a folder is created for each run using the following naming scheme: `runs/<datetime>_<hostname>-<dataset>-<hash>`.
 
 Exemplary results for `02_cardboard/30` in layout (depth, normals, prediction, target, error map) using default parameters:
 
 https://github.com/user-attachments/assets/69281d20-77d9-4072-9a68-a53cc0be7970
 
-Run using defaults, but with different loss functions, as in Figure 9:
+Run with different loss functions, as in Figure 9:
 
     python main.py /path/to/maroon/33_s2_hand_open/30 --loss [l1, l1_complex, l2, l2_reco]
 
-Run using defaults, but with different material regularization (storage) options, as in Figure 10:
+Run with different material regularization (storage) options, as in Figure 10:
 
     python main.py /path/to/maroon/33_s2_hand_open/30 --material_storage [global, voxelgrid, hashgrid, vertex]
 
-Run using defaults, but with different material models, as in Figure 11:
+Run with different material models, as in Figure 11:
 
     python main.py /path/to/maroon/33_s2_hand_open/30 --material [0-4]
 
-Run using defaults, but with different features turned on or off, as in Figure 12:
+Run with different features turned on or off, as in Figure 12:
 
     python main.py /path/to/maroon/33_s2_hand_open/30 [--no_emptyfiltered, --no_reg_offset, --use_normalmap]
 

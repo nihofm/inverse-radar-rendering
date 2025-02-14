@@ -216,7 +216,7 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,cuda,c++
 
-.slangpy_cache/
+.slangtorch_cache/
 *.lock
 .vscode/
 *.zip
